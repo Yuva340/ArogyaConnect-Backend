@@ -94,18 +94,20 @@ app.add_middleware(
 
     CORSMiddleware,
 
-    allow_origins=[
+   allow_origins=[
 
-        "http://127.0.0.1:5500",
+    "https://medical-arogya-connect.xo.je",
 
-        "http://localhost:5500",
+    "http://127.0.0.1:5500",
 
-        "http://127.0.0.1:8000",
+    "http://localhost:5500",
 
-        "http://localhost:8000",
+    "http://127.0.0.1:8000",
 
-        "null"
-    ],
+    "http://localhost:8000",
+
+    "null"
+],
 
     allow_credentials=True,
 
