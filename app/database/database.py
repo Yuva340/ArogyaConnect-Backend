@@ -1,20 +1,34 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-from dotenv import load_dotenv
-
 load_dotenv()
-
-import os
 
 
 # =========================================================
 # DATABASE CONFIGURATION
 # =========================================================
 
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = int(os.getenv("DB_PORT", "3306"))
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
-DATABASE_URL=mysql+pymysql://if0_43049302:VEUPbA3vtQs@sql211.infinityfree.com/if0_43049302_arogya_connect
+
+DATABASE_URL = URL.create(
+    drivername="mysql+pymysql",
+    username=DB_USER,
+    password=DB_PASSWORD,
+    host=DB_HOST,
+    port=DB_PORT,
+    database=DB_NAME
+)
+
 
 # =========================================================
 # SQLALCHEMY ENGINE
@@ -22,11 +36,8 @@ DATABASE_URL=mysql+pymysql://if0_43049302:VEUPbA3vtQs@sql211.infinityfree.com/if
 
 engine = create_engine(
     DATABASE_URL,
-
     pool_pre_ping=True,
-
     pool_recycle=280,
-
     echo=False
 )
 
@@ -58,9 +69,7 @@ def get_db():
     db = SessionLocal()
 
     try:
-
         yield db
 
     finally:
-
         db.close()
